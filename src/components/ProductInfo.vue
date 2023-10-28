@@ -52,7 +52,7 @@ export default {
       this.sizeValidationError = false;
     },
     addToCart(product) {
-      if (!product.selectedSize) {
+      if (!this.selectedSize) {
         this.sizeValidationError = true;
       } else {
       const cartStore = useCartStore();
