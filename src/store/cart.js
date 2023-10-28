@@ -17,6 +17,12 @@ export const useCartStore = defineStore({
         this.items.push(product);
       }
     },
+    removeItem(productId) {
+      const index = this.items.findIndex((item) => item.id === productId);
+      if (index !== -1) {
+        this.items.splice(index, 1);
+      }
+    },
   },
   persist: true,
 });

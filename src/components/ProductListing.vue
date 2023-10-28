@@ -30,6 +30,7 @@
                     :class="{ selected: product.selectedSize === size }" @click="selectSize(product, size)">{{ size
                     }}</span>
                 </p>
+                <small v-if="product.sizeValidationError" class="text-danger">Please select a size</small>
               </div>
             </div>
           </transition>
@@ -76,19 +77,21 @@ export default {
       }
     },
     selectSize(product, size) {
-      if (product.selectedSize === size) {
-        product.selectedSize = null;
-      } else {
-        product.selectedSize = size;
-      }
+      product.selectedSize = size;
+      product.sizeValidationError = false;
     },
     addToCart(product) {
-      const cartStore = useCartStore();
-      cartStore.addItem(product.id);
-      product.addedToCart = true;
-      setTimeout(() => {
-        product.addedToCart = false;
-      }, 500);
+      if (!product.selectedSize) {
+        product.sizeValidationError = true;
+      } else {
+        const cartStore = useCartStore();
+        cartStore.addItem(product.id);
+        product.addedToCart = true;
+        setTimeout(() => {
+          product.addedToCart = false;
+        }, 500);
+        product.sizeValidationError = false;
+      }
     },
   },
 };

@@ -20,12 +20,14 @@
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="fas fa-heart"></i></a>
         </li>
-        <li class="nav-item position-relative">
-          <a class="nav-link" href="#">
-            <i class="fas fa-shopping-bag"></i>
-            <span class="badge badge-pill badge-danger cart-badge-top-right">{{ cartTotal }}</span>
-          </a>
-        </li>
+        <router-link to="/cart">
+          <li class="nav-item position-relative">
+            <a class="nav-link" href="#">
+              <i class="fas fa-shopping-bag"></i>
+              <span class="badge badge-pill badge-danger cart-badge-top-right">{{ cartTotal }}</span>
+            </a>
+          </li>
+        </router-link>
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
         </li>

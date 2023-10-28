@@ -10,11 +10,11 @@
       <div v-if="product" class="col-md-7">
         <h2>{{ product.title }}</h2>
         <p class="text-danger" style="font-size: 24px;">Discounted Price: {{ product.discountPrice }}</p>
-        <p style="text-decoration: line-through;">Actual Price: {{ product.actualPrice }}</p>
+        <p>Actual Price: <span style="text-decoration: line-through;">{{ product.actualPrice }}</span></p>
         <p class="text-muted">Size:
           <span class="size" :class="{ selected: selectedSize === size }" v-for="size in product.sizes" :key="size" @click="selectSize(size)">{{ size }}</span>
         </p>
-        <button class="btn btn-primary">Add to Cart</button>
+        <button class="btn btn-primary" @click="addToCart(product)">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -24,6 +24,7 @@
 <script>
 import Navbar from "@/components/AppNavbar";
 import { useProductsStore } from '@/store/products';
+import { useCartStore } from '@/store/cart';
 
 export default {
   components: {
@@ -46,6 +47,14 @@ export default {
   methods: {
     selectSize(size) {
       this.selectedSize = size;
+    },
+    addToCart(product) {
+      const cartStore = useCartStore();
+      cartStore.addItem(product.id);
+      product.addedToCart = true;
+      setTimeout(() => {
+        product.addedToCart = false;
+      }, 500);
     },
   },
 };
