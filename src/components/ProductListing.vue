@@ -30,7 +30,7 @@
                     :class="{ selected: product.selectedSize === size }" @click="selectSize(product, size)">{{ size
                     }}</span>
                 </p>
-                <small v-if="product.sizeValidationError" class="text-danger">Please select a size</small>
+                <small v-if="product.sizeValidationError" class="text-danger d-flex justify-content-center font-weight-bold">Please select a size</small>
               </div>
             </div>
           </transition>

@@ -14,6 +14,7 @@
         <p class="text-muted">Size:
           <span class="size" :class="{ selected: selectedSize === size }" v-for="size in product.sizes" :key="size" @click="selectSize(size)">{{ size }}</span>
         </p>
+        <small v-if="sizeValidationError" class="text-danger d-flex font-weight-bold mb-3">Please select a size</small>
         <button class="btn btn-primary" @click="addToCart(product)">Add to Cart</button>
       </div>
     </div>
@@ -34,6 +35,7 @@ export default {
     return {
       productId: null,
       selectedSize: null,
+      sizeValidationError: false,
     };
   },
   computed: {
@@ -47,14 +49,20 @@ export default {
   methods: {
     selectSize(size) {
       this.selectedSize = size;
+      this.sizeValidationError = false;
     },
     addToCart(product) {
+      if (!product.selectedSize) {
+        this.sizeValidationError = true;
+      } else {
       const cartStore = useCartStore();
       cartStore.addItem(product.id);
       product.addedToCart = true;
       setTimeout(() => {
         product.addedToCart = false;
       }, 500);
+      this.sizeValidationError = false;
+      }
     },
   },
 };
